@@ -10,7 +10,9 @@ defmodule AptitudeWeb.UserConfirmationLive do
         <div class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700">
           One last step
         </div>
-        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">Confirm your account.</h1>
+        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">
+          Confirm your account.
+        </h1>
         <p class="mt-4 text-base leading-7 text-gray-600">
           Activate your account to start creating tests, sending candidate links, and reviewing results from your dashboard.
         </p>
@@ -19,20 +21,34 @@ defmodule AptitudeWeb.UserConfirmationLive do
       <div class="rounded-[2rem] border border-gray-200/70 bg-white/95 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8">
         <div class="mb-8">
           <h2 class="font-display text-3xl font-bold text-gray-950">Confirm account</h2>
-          <p class="mt-2 text-sm text-gray-500">Use the secure token from your email to activate access.</p>
+          <p class="mt-2 text-sm text-gray-500">
+            Use the secure token from your email to activate access.
+          </p>
         </div>
 
         <.simple_form for={@form} id="confirmation_form" phx-submit="confirm_account">
           <input type="hidden" name={@form[:token].name} value={@form[:token].value} />
           <:actions>
-            <.button phx-disable-with="Confirming..." class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800">Confirm my account</.button>
+            <.button
+              phx-disable-with="Confirming..."
+              class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800"
+            >
+              Confirm my account
+            </.button>
           </:actions>
         </.simple_form>
 
         <p class="text-center mt-5 text-sm text-gray-500">
-          <.link href={~p"/users/register"} class="font-semibold text-indigo-600 hover:text-indigo-500">Register</.link>
+          <.link
+            href={~p"/users/register"}
+            class="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
+            Register
+          </.link>
           <span class="mx-2 text-gray-300">/</span>
-          <.link href={~p"/users/log_in"} class="font-semibold text-indigo-600 hover:text-indigo-500">Log in</.link>
+          <.link href={~p"/users/log_in"} class="font-semibold text-indigo-600 hover:text-indigo-500">
+            Log in
+          </.link>
         </p>
       </div>
     </div>

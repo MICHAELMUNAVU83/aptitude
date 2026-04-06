@@ -21,7 +21,9 @@ defmodule AptitudeWeb.UserLoginLive do
           </div>
           <div class="rounded-2xl border border-gray-100 bg-white/90 p-4 shadow-sm">
             <p class="font-display text-2xl font-bold text-gray-950">Focused</p>
-            <p class="mt-1 text-sm text-gray-500">Review candidate performance before interviews start.</p>
+            <p class="mt-1 text-sm text-gray-500">
+              Review candidate performance before interviews start.
+            </p>
           </div>
         </div>
       </div>

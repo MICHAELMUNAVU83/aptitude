@@ -10,7 +10,9 @@ defmodule AptitudeWeb.UserForgotPasswordLive do
         <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700">
           Secure account recovery
         </div>
-        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">Forgot your password?</h1>
+        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">
+          Forgot your password?
+        </h1>
         <p class="mt-4 text-base leading-7 text-gray-600">
           Enter your email and we'll send a secure reset link so you can get back into your hiring dashboard quickly.
         </p>
@@ -24,19 +26,37 @@ defmodule AptitudeWeb.UserForgotPasswordLive do
 
         <.simple_form for={@form} id="reset_password_form" phx-submit="send_email" class="space-y-4">
           <div>
-            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Email</label>
-            <.input field={@form[:email]} type="email" placeholder="you@company.com" required class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white" />
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+              Email
+            </label>
+            <.input
+              field={@form[:email]}
+              type="email"
+              placeholder="you@company.com"
+              required
+              class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
+            />
           </div>
           <:actions>
-            <.button phx-disable-with="Sending..." class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800">
+            <.button
+              phx-disable-with="Sending..."
+              class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800"
+            >
               Send password reset instructions
             </.button>
           </:actions>
         </.simple_form>
         <p class="text-center text-sm mt-5 text-gray-500">
-          <.link href={~p"/users/register"} class="font-semibold text-indigo-600 hover:text-indigo-500">Register</.link>
+          <.link
+            href={~p"/users/register"}
+            class="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
+            Register
+          </.link>
           <span class="mx-2 text-gray-300">/</span>
-          <.link href={~p"/users/log_in"} class="font-semibold text-indigo-600 hover:text-indigo-500">Log in</.link>
+          <.link href={~p"/users/log_in"} class="font-semibold text-indigo-600 hover:text-indigo-500">
+            Log in
+          </.link>
         </p>
       </div>
     </div>

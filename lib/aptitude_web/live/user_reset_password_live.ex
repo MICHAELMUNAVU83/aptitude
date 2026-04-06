@@ -10,7 +10,9 @@ defmodule AptitudeWeb.UserResetPasswordLive do
         <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700">
           Secure password reset
         </div>
-        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">Choose a new password.</h1>
+        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">
+          Choose a new password.
+        </h1>
         <p class="mt-4 text-base leading-7 text-gray-600">
           Your new password should be strong, memorable, and at least 12 characters long.
         </p>
@@ -33,7 +35,13 @@ defmodule AptitudeWeb.UserResetPasswordLive do
             Oops, something went wrong! Please check the errors below.
           </.error>
 
-          <.input field={@form[:password]} type="password" label="New password" required class="rounded-2xl" />
+          <.input
+            field={@form[:password]}
+            type="password"
+            label="New password"
+            required
+            class="rounded-2xl"
+          />
           <.input
             field={@form[:password_confirmation]}
             type="password"
@@ -42,14 +50,26 @@ defmodule AptitudeWeb.UserResetPasswordLive do
             class="rounded-2xl"
           />
           <:actions>
-            <.button phx-disable-with="Resetting..." class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800">Reset Password</.button>
+            <.button
+              phx-disable-with="Resetting..."
+              class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800"
+            >
+              Reset Password
+            </.button>
           </:actions>
         </.simple_form>
 
         <p class="text-center text-sm mt-5 text-gray-500">
-          <.link href={~p"/users/register"} class="font-semibold text-indigo-600 hover:text-indigo-500">Register</.link>
+          <.link
+            href={~p"/users/register"}
+            class="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
+            Register
+          </.link>
           <span class="mx-2 text-gray-300">/</span>
-          <.link href={~p"/users/log_in"} class="font-semibold text-indigo-600 hover:text-indigo-500">Log in</.link>
+          <.link href={~p"/users/log_in"} class="font-semibold text-indigo-600 hover:text-indigo-500">
+            Log in
+          </.link>
         </p>
       </div>
     </div>

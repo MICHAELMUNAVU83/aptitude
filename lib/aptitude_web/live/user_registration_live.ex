@@ -20,9 +20,15 @@ defmodule AptitudeWeb.UserRegistrationLive do
         <div class="mt-8 rounded-[1.75rem] border border-gray-100 bg-white/90 p-5 shadow-sm">
           <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">What you get</p>
           <ul class="mt-4 space-y-3 text-sm text-gray-600">
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-indigo-500"></span><span>AI-generated tests tailored to role, sector, and difficulty.</span></li>
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-amber-500"></span><span>Candidate links that work instantly without account creation.</span></li>
-            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-emerald-500"></span><span>Interview-ready reports with strengths, risks, and follow-up probes.</span></li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2.5 w-2.5 rounded-full bg-indigo-500"></span><span>AI-generated tests tailored to role, sector, and difficulty.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2.5 w-2.5 rounded-full bg-amber-500"></span><span>Candidate links that work instantly without account creation.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2.5 w-2.5 rounded-full bg-emerald-500"></span><span>Interview-ready reports with strengths, risks, and follow-up probes.</span>
+            </li>
           </ul>
         </div>
       </div>

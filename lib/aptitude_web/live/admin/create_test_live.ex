@@ -34,7 +34,9 @@ defmodule AptitudeWeb.Admin.CreateTestLive do
           <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700">
             New assessment
           </div>
-          <h1 class="font-display mt-4 text-3xl font-bold text-gray-950 sm:text-4xl">Create a new test</h1>
+          <h1 class="font-display mt-4 text-3xl font-bold text-gray-950 sm:text-4xl">
+            Create a new test
+          </h1>
           <p class="text-sm text-gray-500 mt-2 leading-6">
             Fill in the details below and we'll generate the questions, save the test, and send the candidate link.
           </p>
@@ -43,7 +45,8 @@ defmodule AptitudeWeb.Admin.CreateTestLive do
         <%= if @generating do %>
           <div class="py-10 sm:py-14 flex flex-col items-center text-center gap-6">
             <div class="relative w-16 h-16">
-              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-100 to-indigo-100"></div>
+              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-100 to-indigo-100">
+              </div>
               <svg
                 class="animate-spin w-16 h-16 text-indigo-500 absolute inset-0"
                 fill="none"
@@ -96,7 +99,9 @@ defmodule AptitudeWeb.Admin.CreateTestLive do
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-400">Difficulty</span>
-                  <span class="font-semibold text-gray-700">{String.capitalize(@done.difficulty)}</span>
+                  <span class="font-semibold text-gray-700">
+                    {String.capitalize(@done.difficulty)}
+                  </span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-400">Questions</span>
