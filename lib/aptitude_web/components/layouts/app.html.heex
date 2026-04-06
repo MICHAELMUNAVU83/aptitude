@@ -1,0 +1,20 @@
+<main class="mx-auto px-6 py-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-center justify-between py-2 mb-4">
+      <.link navigate={~p"/"} class="inline-flex items-center gap-3 text-gray-900">
+        <img
+          src={~p"/images/logo.png"}
+          alt="Aptitude Test logo"
+          class="h-10 w-10 rounded-xl object-contain"
+        />
+        <div>
+          <p class="text-sm font-bold leading-none tracking-tight">Aptitude Test</p>
+          <p class="text-xs text-gray-400 mt-1">AI-powered candidate assessments</p>
+        </div>
+      </.link>
+    </div>
+
+    <.flash_group flash={@flash} />
+    {@inner_content}
+  </div>
+</main>

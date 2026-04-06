@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <% page_title = assigns[:page_title] || "Aptitude Test" %>
+    <% page_description =
+      assigns[:page_description] ||
+        "Aptitude Test helps hiring teams generate role-specific aptitude tests, send candidate links instantly, and review AI-assisted reports in minutes." %>
+    <% canonical_url = assigns[:canonical_url] || "https://aptitudetest.info" %>
+    <% social_image_url =
+      assigns[:social_image_url] || "https://aptitudetest.info/images/logo.png" %>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={page_description} />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="author" content="Aptitude Test" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link rel="canonical" href={canonical_url} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Aptitude Test" />
+    <meta property="og:title" content={page_title} />
+    <meta property="og:description" content={page_description} />
+    <meta property="og:url" content={canonical_url} />
+    <meta property="og:image" content={social_image_url} />
+    <meta property="og:image:alt" content="Aptitude Test logo" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={page_title} />
+    <meta name="twitter:description" content={page_description} />
+    <meta name="twitter:image" content={social_image_url} />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title default="Aptitude">
+      {assigns[:page_title]}
+    </.live_title>
+    <script type="application/ld+json">
+      {Phoenix.HTML.raw(Jason.encode!(%{
+        "@context" => "https://schema.org",
+        "@type" => "Organization",
+        "name" => "Aptitude Test",
+        "url" => "https://aptitudetest.info",
+        "logo" => "https://aptitudetest.info/images/logo.png",
+        "sameAs" => []
+      }))}
+    </script>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+  </head>
+  <body class="bg-gradient-to-br from-slate-50 via-white to-violet-50/30 min-h-screen text-gray-900 antialiased">
+    {@inner_content}
+  </body>
+</html>
