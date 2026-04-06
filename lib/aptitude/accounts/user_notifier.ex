@@ -1,8 +1,6 @@
 defmodule Aptitude.Accounts.UserNotifier do
   alias Aptitude.Gmail
 
-  @brand_color "#4f46e5"
-
   defp deliver(recipient, subject, html_body) do
     Gmail.send_email(recipient, subject, html_body)
   end
@@ -11,59 +9,71 @@ defmodule Aptitude.Accounts.UserNotifier do
   Deliver instructions to confirm account.
   """
   def deliver_confirmation_instructions(user, url) do
-    deliver(user.email, "Confirm your Aptitude account", account_email(%{
-      title: "Confirm your account",
-      preheader: "Click the link below to confirm your Aptitude account.",
-      body: """
-      <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">
-        Welcome to Aptitude! Please confirm your email address to activate your account.
-      </p>
-      #{cta_button("Confirm account →", url)}
-      <p style="color:#9ca3af;font-size:12px;line-height:1.6;margin:20px 0 0;text-align:center;">
-        If you didn't create an Aptitude account, you can safely ignore this email.
-      </p>
-      """
-    }))
+    deliver(
+      user.email,
+      "Confirm your Aptitude account",
+      account_email(%{
+        title: "Confirm your account",
+        preheader: "Click the link below to confirm your Aptitude account.",
+        body: """
+        <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">
+          Welcome to Aptitude! Please confirm your email address to activate your account.
+        </p>
+        #{cta_button("Confirm account →", url)}
+        <p style="color:#9ca3af;font-size:12px;line-height:1.6;margin:20px 0 0;text-align:center;">
+          If you didn't create an Aptitude account, you can safely ignore this email.
+        </p>
+        """
+      })
+    )
   end
 
   @doc """
   Deliver instructions to reset a user password.
   """
   def deliver_reset_password_instructions(user, url) do
-    deliver(user.email, "Reset your Aptitude password", account_email(%{
-      title: "Reset your password",
-      preheader: "A password reset was requested for your Aptitude account.",
-      body: """
-      <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">
-        We received a request to reset the password for your account.
-        Click the button below to choose a new password.
-      </p>
-      #{cta_button("Reset password →", url)}
-      <p style="color:#9ca3af;font-size:12px;line-height:1.6;margin:20px 0 0;text-align:center;">
-        If you didn't request a password reset, no action is needed — your password remains unchanged.
-      </p>
-      """
-    }))
+    deliver(
+      user.email,
+      "Reset your Aptitude password",
+      account_email(%{
+        title: "Reset your password",
+        preheader: "A password reset was requested for your Aptitude account.",
+        body: """
+        <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">
+          We received a request to reset the password for your account.
+          Click the button below to choose a new password.
+        </p>
+        #{cta_button("Reset password →", url)}
+        <p style="color:#9ca3af;font-size:12px;line-height:1.6;margin:20px 0 0;text-align:center;">
+          If you didn't request a password reset, no action is needed — your password remains unchanged.
+        </p>
+        """
+      })
+    )
   end
 
   @doc """
   Deliver instructions to update a user email.
   """
   def deliver_update_email_instructions(user, url) do
-    deliver(user.email, "Confirm your new Aptitude email", account_email(%{
-      title: "Confirm email change",
-      preheader: "Click the link below to confirm your new email address.",
-      body: """
-      <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">
-        You requested to change the email address on your Aptitude account.
-        Click the button below to confirm the new address.
-      </p>
-      #{cta_button("Confirm new email →", url)}
-      <p style="color:#9ca3af;font-size:12px;line-height:1.6;margin:20px 0 0;text-align:center;">
-        If you didn't request this change, please ignore this email.
-      </p>
-      """
-    }))
+    deliver(
+      user.email,
+      "Confirm your new Aptitude email",
+      account_email(%{
+        title: "Confirm email change",
+        preheader: "Click the link below to confirm your new email address.",
+        body: """
+        <p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0 0 24px;">
+          You requested to change the email address on your Aptitude account.
+          Click the button below to confirm the new address.
+        </p>
+        #{cta_button("Confirm new email →", url)}
+        <p style="color:#9ca3af;font-size:12px;line-height:1.6;margin:20px 0 0;text-align:center;">
+          If you didn't request this change, please ignore this email.
+        </p>
+        """
+      })
+    )
   end
 
   # ── Private helpers ─────────────────────────────────────────────────────────
