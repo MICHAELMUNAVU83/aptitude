@@ -3,6 +3,10 @@ import Config
 # Only in tests, remove the complexity from the password hashing algorithm
 config :bcrypt_elixir, :log_rounds, 1
 
+config :aptitude,
+       :base_url,
+       System.get_env("BASE_URL") || "http://localhost:4002"
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used

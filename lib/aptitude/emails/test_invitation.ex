@@ -9,7 +9,7 @@ defmodule Aptitude.Emails.TestInvitation do
   # ── Public API ─────────────────────────────────────────────────────────────
 
   def send_invitation(test) do
-    test_url = AptitudeWeb.Endpoint.url() <> "/test/#{test.token}"
+    test_url = base_url() <> "/test/#{test.token}"
     subject = "You've been invited to take an aptitude test"
 
     html =
@@ -71,7 +71,7 @@ defmodule Aptitude.Emails.TestInvitation do
     subject = "#{test.candidate_email} has completed their aptitude test"
 
     result_url =
-      AptitudeWeb.Endpoint.url() <> "/admin/tests/#{test.id}/result"
+      base_url() <> "/admin/tests/#{test.id}/result"
 
     html =
       branded_email(%{
@@ -98,6 +98,10 @@ defmodule Aptitude.Emails.TestInvitation do
   end
 
   # ── Private helpers ─────────────────────────────────────────────────────────
+
+  defp base_url do
+    Application.fetch_env!(:aptitude, :base_url)
+  end
 
   defp branded_email(%{title: title, preheader: preheader, body: body}) do
     """

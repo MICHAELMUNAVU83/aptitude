@@ -5,6 +5,10 @@ config :aptitude,
        :openai_api_key,
        System.get_env("OPENAI_API_KEY") || raise("OPENAI_API_KEY env var is not set")
 
+config :aptitude,
+       :base_url,
+       System.get_env("BASE_URL") || "http://localhost:7110"
+
 # Configure your database
 config :aptitude, Aptitude.Repo,
   username: "postgres",

@@ -21,6 +21,12 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
+  config :aptitude,
+         :base_url,
+         System.get_env("BASE_URL") || raise("BASE_URL env var is missing")
+end
+
+if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
       raise """
