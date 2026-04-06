@@ -7,6 +7,8 @@ config :aptitude,
        :base_url,
        System.get_env("BASE_URL") || "http://localhost:4002"
 
+config :aptitude, :email_delivery_mode, :test
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used

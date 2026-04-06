@@ -12,35 +12,56 @@ defmodule Aptitude.Gmail do
   # ── Public API ────────────────────────────────────────────────────────────
 
   def send_email(to_email, subject, html_body) do
-    payload = %{
-      from_email: @from_email,
+    email = email_payload(to_email, subject, html_body)
+
+    case Application.get_env(:aptitude, :email_delivery_mode, :api) do
+      :test ->
+        {:ok, email}
+
+      _ ->
+        deliver_via_api(email)
+    end
+  end
+
+  defp email_payload(to_email, subject, html_body) do
+    %{
       to: to_email,
       subject: subject,
-      body: html_body,
-      html_body: html_body
+      html_body: html_body,
+      text_body: html_body,
+      from_email: @from_email,
+      body: html_body
     }
+  end
 
-    Logger.info("[Gmail] Sending \"#{subject}\" → #{to_email}")
+  defp deliver_via_api(email) do
+    Logger.info("[Gmail] Sending \"#{email.subject}\" → #{email.to}")
 
     case Req.post(@api_url,
            headers: [{"Content-Type", "application/json"}],
-           json: payload,
+           json: %{
+             from_email: email.from_email,
+             to: email.to,
+             subject: email.subject,
+             body: email.body,
+             html_body: email.html_body
+           },
            receive_timeout: 60_000
          ) do
       {:ok, %{status: status}} when status in 200..299 ->
-        Logger.info("[Gmail] Delivered \"#{subject}\" → #{to_email} (HTTP #{status})")
-        {:ok, status}
+        Logger.info("[Gmail] Delivered \"#{email.subject}\" → #{email.to} (HTTP #{status})")
+        {:ok, email}
 
       {:ok, %{status: status, body: body}} ->
         Logger.error(
-          "[Gmail] API error #{status} for \"#{subject}\" → #{to_email}: #{inspect(body)}"
+          "[Gmail] API error #{status} for \"#{email.subject}\" → #{email.to}: #{inspect(body)}"
         )
 
         {:error, {status, body}}
 
       {:error, reason} ->
         Logger.error(
-          "[Gmail] HTTP error sending \"#{subject}\" → #{to_email}: #{inspect(reason)}"
+          "[Gmail] HTTP error sending \"#{email.subject}\" → #{email.to}: #{inspect(reason)}"
         )
 
         {:error, reason}

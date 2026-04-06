@@ -112,7 +112,7 @@ defmodule AptitudeWeb.UserResetPasswordLiveTest do
         |> render_click()
         |> follow_redirect(conn, ~p"/users/register")
 
-      assert conn.resp_body =~ "Register"
+      assert conn.resp_body =~ "Create your account"
     end
   end
 end
