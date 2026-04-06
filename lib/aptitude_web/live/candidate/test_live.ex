@@ -106,13 +106,16 @@ defmodule AptitudeWeb.Candidate.TestLive do
             </svg>
             <div class="flex flex-col items-end leading-none">
               <span class="text-xs font-medium opacity-70">Time remaining</span>
-              <span class={["text-base font-bold tabular-nums tracking-tight", timer_color(@time_remaining)]}>
+              <span class={[
+                "text-base font-bold tabular-nums tracking-tight",
+                timer_color(@time_remaining)
+              ]}>
                 {format_time(@time_remaining)}
               </span>
             </div>
           </div>
         </div>
-
+        
     <!-- Progress bar -->
         <div class="w-full bg-gray-100 h-1">
           <div
@@ -122,7 +125,7 @@ defmodule AptitudeWeb.Candidate.TestLive do
           </div>
         </div>
       </div>
-
+      
     <!-- Question area -->
       <div class="flex-1  w-full mx-auto px-6 py-10">
         <%= if length(@questions) > 0 do %>
@@ -164,7 +167,7 @@ defmodule AptitudeWeb.Candidate.TestLive do
               </button>
             <% end %>
           </div>
-
+          
     <!-- Navigation -->
           <div class="flex items-center justify-between mt-10">
             <button
@@ -229,7 +232,7 @@ defmodule AptitudeWeb.Candidate.TestLive do
               </button>
             <% end %>
           </div>
-
+          
     <!-- Question dots -->
           <div class="flex items-center justify-center gap-1.5 mt-10 flex-wrap">
             <%= for {q, idx} <- Enum.with_index(@questions) do %>
