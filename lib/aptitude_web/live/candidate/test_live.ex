@@ -106,7 +106,7 @@ defmodule AptitudeWeb.Candidate.TestLive do
             </svg>
             <div class="flex flex-col items-end leading-none">
               <span class="text-xs font-medium opacity-70">Time remaining</span>
-              <span class="text-base font-bold tabular-nums tracking-tight">
+              <span class={["text-base font-bold tabular-nums tracking-tight", timer_color(@time_remaining)]}>
                 {format_time(@time_remaining)}
               </span>
             </div>
