@@ -5,20 +5,32 @@ defmodule AptitudeWeb.UserSettingsLive do
 
   def render(assigns) do
     ~H"""
-    <.header class="text-center">
-      Account Settings
-      <:subtitle>Manage your account email address and password settings</:subtitle>
-    </.header>
+    <div class="max-w-5xl mx-auto space-y-8">
+      <div class="rounded-[2rem] border border-white/70 bg-white/75 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
+        <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700">
+          Account settings
+        </div>
+        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">Manage your workspace access.</h1>
+        <p class="mt-4 max-w-2xl text-base leading-7 text-gray-600">
+          Update the email attached to your account, change your password, and keep your dashboard secure.
+        </p>
+      </div>
 
-    <div class="space-y-12 divide-y">
-      <div>
+      <div class="grid gap-6 lg:grid-cols-2">
+        <div class="rounded-[2rem] border border-gray-200/70 bg-white/95 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8">
+          <div class="mb-6">
+            <h2 class="font-display text-2xl font-bold text-gray-950">Change email</h2>
+            <p class="mt-2 text-sm text-gray-500">We'll send a confirmation link to your new email address.</p>
+          </div>
+
         <.simple_form
           for={@email_form}
           id="email_form"
           phx-submit="update_email"
           phx-change="validate_email"
+          class="space-y-4"
         >
-          <.input field={@email_form[:email]} type="email" label="Email" required />
+          <.input field={@email_form[:email]} type="email" label="Email" required class="rounded-2xl" />
           <.input
             field={@email_form[:current_password]}
             name="current_password"
@@ -27,13 +39,20 @@ defmodule AptitudeWeb.UserSettingsLive do
             label="Current password"
             value={@email_form_current_password}
             required
+            class="rounded-2xl"
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Email</.button>
+            <.button phx-disable-with="Changing..." class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800">Change Email</.button>
           </:actions>
         </.simple_form>
-      </div>
-      <div>
+        </div>
+
+        <div class="rounded-[2rem] border border-gray-200/70 bg-white/95 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8">
+          <div class="mb-6">
+            <h2 class="font-display text-2xl font-bold text-gray-950">Change password</h2>
+            <p class="mt-2 text-sm text-gray-500">Use a strong password with at least 12 characters.</p>
+          </div>
+
         <.simple_form
           for={@password_form}
           id="password_form"
@@ -42,6 +61,7 @@ defmodule AptitudeWeb.UserSettingsLive do
           phx-change="validate_password"
           phx-submit="update_password"
           phx-trigger-action={@trigger_submit}
+          class="space-y-4"
         >
           <input
             name={@password_form[:email].name}
@@ -49,11 +69,12 @@ defmodule AptitudeWeb.UserSettingsLive do
             id="hidden_user_email"
             value={@current_email}
           />
-          <.input field={@password_form[:password]} type="password" label="New password" required />
+          <.input field={@password_form[:password]} type="password" label="New password" required class="rounded-2xl" />
           <.input
             field={@password_form[:password_confirmation]}
             type="password"
             label="Confirm new password"
+            class="rounded-2xl"
           />
           <.input
             field={@password_form[:current_password]}
@@ -63,11 +84,13 @@ defmodule AptitudeWeb.UserSettingsLive do
             id="current_password_for_password"
             value={@current_password}
             required
+            class="rounded-2xl"
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Password</.button>
+            <.button phx-disable-with="Changing..." class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800">Change Password</.button>
           </:actions>
         </.simple_form>
+        </div>
       </div>
     </div>
     """

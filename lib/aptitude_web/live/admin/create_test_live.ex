@@ -18,7 +18,7 @@ defmodule AptitudeWeb.Admin.CreateTestLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="max-w-lg mt-8 mx-auto">
+    <div class="max-w-xl mt-6 sm:mt-8 mx-auto">
       <.link
         navigate={~p"/admin"}
         class="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors mb-6"
@@ -29,103 +29,106 @@ defmodule AptitudeWeb.Admin.CreateTestLive do
         Back
       </.link>
 
-      <div class="mb-7">
-        <h1 class="text-2xl font-bold text-gray-900">Create a new test</h1>
-        <p class="text-sm text-gray-400 mt-1">
-          Fill in the details below — questions are generated automatically.
-        </p>
-      </div>
-
-      <%= if @generating do %>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-14 flex flex-col items-center text-center gap-6">
-          <div class="relative w-16 h-16">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-100 to-indigo-100"></div>
-            <svg
-              class="animate-spin w-16 h-16 text-indigo-500 absolute inset-0"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                class="opacity-20"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="3"
-              />
-              <path
-                class="opacity-90"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-              />
-            </svg>
+      <div class="rounded-[2rem] border border-gray-200/70 bg-white/95 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8">
+        <div class="mb-7">
+          <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700">
+            New assessment
           </div>
-          <div>
-            <p class="text-sm font-bold text-gray-900">Generating & sending…</p>
-            <p class="text-xs text-gray-400 mt-1.5">Usually takes 10–20 seconds. Hang tight.</p>
-          </div>
+          <h1 class="font-display mt-4 text-3xl font-bold text-gray-950 sm:text-4xl">Create a new test</h1>
+          <p class="text-sm text-gray-500 mt-2 leading-6">
+            Fill in the details below and we'll generate the questions, save the test, and send the candidate link.
+          </p>
         </div>
-      <% else %>
-        <%= if @done do %>
-          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 flex flex-col items-center text-center gap-5">
-            <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center">
+
+        <%= if @generating do %>
+          <div class="py-10 sm:py-14 flex flex-col items-center text-center gap-6">
+            <div class="relative w-16 h-16">
+              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-100 to-indigo-100"></div>
               <svg
-                class="w-7 h-7 text-emerald-600"
+                class="animate-spin w-16 h-16 text-indigo-500 absolute inset-0"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2.5"
               >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                <circle
+                  class="opacity-20"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="3"
+                />
+                <path
+                  class="opacity-90"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                />
               </svg>
             </div>
             <div>
-              <p class="text-base font-bold text-gray-900">Test sent successfully</p>
-              <p class="text-sm text-gray-400 mt-1">
-                Invitation emailed to <span class="font-semibold text-gray-700"><%= @done.email %></span>.
-              </p>
-            </div>
-            <div class="bg-gray-50 rounded-xl w-full p-4 text-left space-y-2.5 text-xs">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Sector</span>
-                <span class="font-semibold text-gray-700">{String.capitalize(@done.sector)}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Difficulty</span>
-                <span class="font-semibold text-gray-700">{String.capitalize(@done.difficulty)}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Questions</span>
-                <span class="font-semibold text-gray-700">{@done.question_count}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Time limit</span>
-                <span class="font-semibold text-gray-700">{@done.time_limit} min</span>
-              </div>
-            </div>
-            <div class="flex gap-3 w-full pt-1">
-              <button
-                phx-click="reset"
-                class="flex-1 text-sm font-semibold text-indigo-600 border border-indigo-200 px-4 py-2.5 rounded-xl hover:bg-indigo-50 transition-colors"
-              >
-                Create another
-              </button>
-              <.link
-                navigate={~p"/admin/tests/#{@done.id}"}
-                class="flex-1 text-sm font-semibold text-white bg-indigo-600 px-4 py-2.5 rounded-xl hover:bg-indigo-500 transition-colors text-center"
-              >
-                View test
-              </.link>
-              <.link
-                navigate={~p"/admin"}
-                class="flex-1 text-sm font-semibold text-gray-600 border border-gray-200 px-4 py-2.5 rounded-xl hover:border-gray-300 transition-colors text-center"
-              >
-                All tests
-              </.link>
+              <p class="text-sm font-bold text-gray-900">Generating & sending…</p>
+              <p class="text-xs text-gray-500 mt-1.5">Usually takes 10–20 seconds. Hang tight.</p>
             </div>
           </div>
         <% else %>
-          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-7">
+          <%= if @done do %>
+            <div class="flex flex-col items-center text-center gap-5 py-2">
+              <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center">
+                <svg
+                  class="w-7 h-7 text-emerald-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <p class="text-base font-bold text-gray-900">Test sent successfully</p>
+                <p class="text-sm text-gray-500 mt-1">
+                  Invitation emailed to <span class="font-semibold text-gray-700"><%= @done.email %></span>.
+                </p>
+              </div>
+              <div class="bg-gray-50 rounded-2xl w-full p-4 text-left space-y-2.5 text-xs border border-gray-100">
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Sector</span>
+                  <span class="font-semibold text-gray-700">{String.capitalize(@done.sector)}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Difficulty</span>
+                  <span class="font-semibold text-gray-700">{String.capitalize(@done.difficulty)}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Questions</span>
+                  <span class="font-semibold text-gray-700">{@done.question_count}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Time limit</span>
+                  <span class="font-semibold text-gray-700">{@done.time_limit} min</span>
+                </div>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-3 w-full pt-1">
+                <button
+                  phx-click="reset"
+                  class="flex-1 text-sm font-semibold text-indigo-600 border border-indigo-200 px-4 py-2.5 rounded-xl hover:bg-indigo-50 transition-colors"
+                >
+                  Create another
+                </button>
+                <.link
+                  navigate={~p"/admin/tests/#{@done.id}"}
+                  class="flex-1 text-sm font-semibold text-white bg-indigo-600 px-4 py-2.5 rounded-xl hover:bg-indigo-500 transition-colors text-center"
+                >
+                  View test
+                </.link>
+                <.link
+                  navigate={~p"/admin"}
+                  class="flex-1 text-sm font-semibold text-gray-600 border border-gray-200 px-4 py-2.5 rounded-xl hover:border-gray-300 transition-colors text-center"
+                >
+                  All tests
+                </.link>
+              </div>
+            </div>
+          <% else %>
             <.form for={@form} phx-submit="create_test" class="space-y-5">
               <div>
                 <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
@@ -218,15 +221,15 @@ defmodule AptitudeWeb.Admin.CreateTestLive do
               <div class="pt-1">
                 <button
                   type="submit"
-                  class="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white text-sm font-bold px-4 py-3 rounded-xl hover:bg-indigo-500 transition-colors shadow-sm"
+                  class="w-full flex items-center justify-center gap-2 bg-gray-900 text-white text-sm font-bold px-4 py-3 rounded-xl hover:bg-gray-800 transition-colors shadow-sm"
                 >
                   Generate & send test
                 </button>
               </div>
             </.form>
-          </div>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
     """
   end

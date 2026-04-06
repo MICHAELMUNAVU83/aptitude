@@ -1,5 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap");
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+@layer base {
+  :root {
+    --font-sans: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+    --font-display: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+  }
+
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+}

@@ -3,25 +3,44 @@ defmodule AptitudeWeb.UserLoginLive do
 
   def render(assigns) do
     ~H"""
-    <div class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div class="w-full max-w-sm">
-        <div class="text-center mb-8">
-          <.link navigate={~p"/"} class="text-xl font-black text-gray-900 tracking-tight">
-            Aptitude
-          </.link>
-          <h1 class="text-2xl font-bold text-gray-900 mt-6 mb-1">Welcome back</h1>
-          <p class="text-sm text-gray-400">
-            Don't have an account?
-            <.link
-              navigate={~p"/users/register"}
-              class="text-indigo-600 font-semibold hover:text-indigo-500"
-            >
-              Sign up
-            </.link>
-          </p>
+    <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+      <div class="rounded-[2rem] border border-white/70 bg-white/75 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
+        <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700">
+          Sign in to your hiring workspace
         </div>
+        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">
+          Welcome back.
+        </h1>
+        <p class="mt-4 max-w-xl text-base leading-7 text-gray-600">
+          Manage candidate tests, resend secure links, and review AI-assisted reports from one dashboard.
+        </p>
+        <div class="mt-8 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gray-100 bg-white/90 p-4 shadow-sm">
+            <p class="font-display text-2xl font-bold text-gray-950">Fast</p>
+            <p class="mt-1 text-sm text-gray-500">Create and send assessments in a few clicks.</p>
+          </div>
+          <div class="rounded-2xl border border-gray-100 bg-white/90 p-4 shadow-sm">
+            <p class="font-display text-2xl font-bold text-gray-950">Focused</p>
+            <p class="mt-1 text-sm text-gray-500">Review candidate performance before interviews start.</p>
+          </div>
+        </div>
+      </div>
 
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-7">
+      <div class="w-full max-w-md lg:ml-auto">
+        <div class="rounded-[2rem] border border-gray-200/70 bg-white/95 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8">
+          <div class="mb-8">
+            <h2 class="font-display text-3xl font-bold text-gray-950">Log in</h2>
+            <p class="mt-2 text-sm text-gray-500">
+              Don't have an account?
+              <.link
+                navigate={~p"/users/register"}
+                class="font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                Sign up
+              </.link>
+            </p>
+          </div>
+
           <.simple_form
             for={@form}
             id="login_form"
@@ -37,7 +56,7 @@ defmodule AptitudeWeb.UserLoginLive do
                 field={@form[:email]}
                 type="email"
                 required
-                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
+                class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
               />
             </div>
             <div>
@@ -56,7 +75,7 @@ defmodule AptitudeWeb.UserLoginLive do
                 field={@form[:password]}
                 type="password"
                 required
-                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
+                class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
               />
             </div>
 
@@ -67,7 +86,7 @@ defmodule AptitudeWeb.UserLoginLive do
             <:actions>
               <.button
                 phx-disable-with="Logging in…"
-                class="w-full flex items-center justify-center bg-indigo-600 text-white text-sm font-bold px-4 py-3 rounded-xl hover:bg-indigo-500 transition-colors shadow-sm mt-2"
+                class="w-full flex items-center justify-center rounded-2xl bg-gray-900 px-4 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-gray-800 mt-2"
               >
                 Log in
               </.button>

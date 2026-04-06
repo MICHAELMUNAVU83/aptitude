@@ -5,35 +5,53 @@ defmodule AptitudeWeb.UserResetPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">Reset Password</.header>
+    <div class="mx-auto max-w-4xl grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+      <div class="rounded-[2rem] border border-white/70 bg-white/75 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
+        <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700">
+          Secure password reset
+        </div>
+        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">Choose a new password.</h1>
+        <p class="mt-4 text-base leading-7 text-gray-600">
+          Your new password should be strong, memorable, and at least 12 characters long.
+        </p>
+      </div>
 
-      <.simple_form
-        for={@form}
-        id="reset_password_form"
-        phx-submit="reset_password"
-        phx-change="validate"
-      >
-        <.error :if={@form.errors != []}>
-          Oops, something went wrong! Please check the errors below.
-        </.error>
+      <div class="rounded-[2rem] border border-gray-200/70 bg-white/95 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8">
+        <div class="mb-8">
+          <h2 class="font-display text-3xl font-bold text-gray-950">Reset password</h2>
+          <p class="mt-2 text-sm text-gray-500">Update your password to regain access.</p>
+        </div>
 
-        <.input field={@form[:password]} type="password" label="New password" required />
-        <.input
-          field={@form[:password_confirmation]}
-          type="password"
-          label="Confirm new password"
-          required
-        />
-        <:actions>
-          <.button phx-disable-with="Resetting..." class="w-full">Reset Password</.button>
-        </:actions>
-      </.simple_form>
+        <.simple_form
+          for={@form}
+          id="reset_password_form"
+          phx-submit="reset_password"
+          phx-change="validate"
+          class="space-y-4"
+        >
+          <.error :if={@form.errors != []}>
+            Oops, something went wrong! Please check the errors below.
+          </.error>
 
-      <p class="text-center text-sm mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
-      </p>
+          <.input field={@form[:password]} type="password" label="New password" required class="rounded-2xl" />
+          <.input
+            field={@form[:password_confirmation]}
+            type="password"
+            label="Confirm new password"
+            required
+            class="rounded-2xl"
+          />
+          <:actions>
+            <.button phx-disable-with="Resetting..." class="w-full rounded-2xl bg-gray-900 py-3 text-sm font-bold text-white hover:bg-gray-800">Reset Password</.button>
+          </:actions>
+        </.simple_form>
+
+        <p class="text-center text-sm mt-5 text-gray-500">
+          <.link href={~p"/users/register"} class="font-semibold text-indigo-600 hover:text-indigo-500">Register</.link>
+          <span class="mx-2 text-gray-300">/</span>
+          <.link href={~p"/users/log_in"} class="font-semibold text-indigo-600 hover:text-indigo-500">Log in</.link>
+        </p>
+      </div>
     </div>
     """
   end

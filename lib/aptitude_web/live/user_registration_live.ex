@@ -6,25 +6,42 @@ defmodule AptitudeWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div class="w-full max-w-sm">
-        <div class="text-center mb-8">
-          <.link navigate={~p"/"} class="text-xl font-black text-gray-900 tracking-tight">
-            Aptitude
-          </.link>
-          <h1 class="text-2xl font-bold text-gray-900 mt-6 mb-1">Create your account</h1>
-          <p class="text-sm text-gray-400">
-            Already have an account?
-            <.link
-              navigate={~p"/users/log_in"}
-              class="text-indigo-600 font-semibold hover:text-indigo-500"
-            >
-              Log in
-            </.link>
-          </p>
+    <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+      <div class="rounded-[2rem] border border-white/70 bg-white/75 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
+        <div class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700">
+          Start testing candidates faster
         </div>
+        <h1 class="font-display mt-5 text-4xl font-bold leading-tight text-gray-950 sm:text-5xl">
+          Create your account.
+        </h1>
+        <p class="mt-4 max-w-xl text-base leading-7 text-gray-600">
+          Launch branded aptitude tests, share secure links, and keep every candidate review in one clean workflow.
+        </p>
+        <div class="mt-8 rounded-[1.75rem] border border-gray-100 bg-white/90 p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">What you get</p>
+          <ul class="mt-4 space-y-3 text-sm text-gray-600">
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-indigo-500"></span><span>AI-generated tests tailored to role, sector, and difficulty.</span></li>
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-amber-500"></span><span>Candidate links that work instantly without account creation.</span></li>
+            <li class="flex items-start gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-emerald-500"></span><span>Interview-ready reports with strengths, risks, and follow-up probes.</span></li>
+          </ul>
+        </div>
+      </div>
 
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-7">
+      <div class="w-full max-w-md lg:ml-auto">
+        <div class="rounded-[2rem] border border-gray-200/70 bg-white/95 p-7 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8">
+          <div class="mb-8">
+            <h2 class="font-display text-3xl font-bold text-gray-950">Create your account</h2>
+            <p class="mt-2 text-sm text-gray-500">
+              Already have an account?
+              <.link
+                navigate={~p"/users/log_in"}
+                class="font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                Log in
+              </.link>
+            </p>
+          </div>
+
           <.error :if={@check_errors}>
             Oops, something went wrong! Please check the errors below.
           </.error>
@@ -47,7 +64,7 @@ defmodule AptitudeWeb.UserRegistrationLive do
                 field={@form[:email]}
                 type="email"
                 required
-                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
+                class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
               />
             </div>
             <div>
@@ -58,14 +75,14 @@ defmodule AptitudeWeb.UserRegistrationLive do
                 field={@form[:password]}
                 type="password"
                 required
-                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
+                class="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-white"
               />
             </div>
 
             <:actions>
               <.button
                 phx-disable-with="Creating account…"
-                class="w-full flex items-center justify-center bg-indigo-600 text-white text-sm font-bold px-4 py-3 rounded-xl hover:bg-indigo-500 transition-colors shadow-sm mt-2"
+                class="w-full flex items-center justify-center rounded-2xl bg-gray-900 px-4 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-gray-800 mt-2"
               >
                 Create account
               </.button>
