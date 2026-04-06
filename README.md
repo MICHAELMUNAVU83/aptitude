@@ -4,6 +4,11 @@ Aptitude Test is an AI-powered candidate assessment platform built with Phoenix 
 
 Production site: https://aptitudetest.info
 
+
+
+<img width="1440" height="775" alt="Screenshot 2026-04-06 at 20 24 28" src="https://github.com/user-attachments/assets/002d19c0-b106-4f4f-a075-1d7b4b7fd25a" />
+
+
 ## What the app does
 
 - Lets an authenticated admin create a test for a candidate
