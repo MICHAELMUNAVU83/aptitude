@@ -12,10 +12,10 @@ defmodule Aptitude.OpenAI do
   defp request(prompt) do
     Req.post(@api_url,
       json: %{
-        model: "gpt-4o",
+        model: "gpt-5",
         messages: [%{role: "user", content: prompt}],
         response_format: %{type: "json_object"},
-        temperature: 0.7
+        temperature: 0.2
       },
       headers: [
         {"Authorization", "Bearer #{api_key()}"}
@@ -164,11 +164,41 @@ defmodule Aptitude.OpenAI do
       C. Report your concern through the company's internal whistleblower or reporting channel
       D. Tell other colleagues to see if anyone else has noticed
     Answer: C (Proper governance procedures exist for exactly this situation; direct confrontation or gossip could escalate the issue unprofessionally)
+
+  ---
+
+  TYPE 11 — ABSTRACT / SPATIAL REASONING
+  These questions test non-verbal reasoning using shapes, patterns, rotations, and spatial transformations.
+  Describe every shape precisely in words so candidates can visualise the pattern.
+  Example:
+    Q: Look at the following sequence of shapes: Circle, Square, Triangle, Circle, Square, ___. What comes next?
+    A options: A. Circle  B. Square  C. Triangle  D. Pentagon
+    Answer: C (The pattern repeats: Circle → Square → Triangle)
+
+  Example 2:
+    Q: A square is rotated 45° to form a diamond. The diamond is then cut in half along its vertical axis. What shape is each resulting piece?
+    A options: A. Two rectangles  B. Two right-angled triangles  C. Two equilateral triangles  D. Two isosceles triangles
+    Answer: D (Cutting a diamond vertically produces two identical isosceles triangles)
+
+  Example 3:
+    Q: In a pattern matrix, each row contains a circle, a triangle, and a square. Each shape is filled with one of three patterns: solid, striped, or empty. In Row 1: solid circle, striped triangle, empty square. In Row 2: striped square, empty circle, solid triangle. In Row 3: empty triangle, solid square, ___. What is the missing shape and pattern?
+    A options: A. Striped circle  B. Solid circle  C. Empty circle  D. Striped square
+    Answer: A (Each row has all 3 shapes and all 3 fills exactly once; Row 3 is missing a circle and the striped fill)
+
+  Example 4:
+    Q: A piece of paper is folded in half, then in half again. A single hole is punched through all layers. When the paper is unfolded, how many holes are visible?
+    A options: A. 1  B. 2  C. 4  D. 8
+    Answer: C (Two folds create 4 layers, so 1 punch = 4 holes when unfolded)
+
+  Example 5:
+    Q: Which shape does NOT fit the pattern? All shapes are: a small black circle inside a large white circle, a small white square inside a large black square, a small black triangle inside a large white triangle, a small black star inside a large black star.
+    A options: A. Circle pair  B. Square pair  C. Triangle pair  D. Star pair
+    Answer: D (In all other pairs, the inner and outer shapes have opposite fills — black/white or white/black — but the star pair has the same fill: both black)
   """
 
   @sector_knowledge %{
     "General Knowledge" =>
-      "Kenyan history & politics, East African geography, science fundamentals, current affairs in Kenya and Africa, world capitals, Kenyan culture and national symbols",
+      "Kenyan history & politics, East African geography, science fundamentals, current affairs in Kenya and Africa, world capitals, Kenyan culture and national symbols, abstract reasoning (shape sequences, spatial transformations, pattern matrices, paper folding, figure classification)",
     "Marketing" =>
       "4Ps, brand positioning, digital marketing (SEO/social/email), consumer behaviour, market research, Kenyan advertising landscape, ROI calculations, campaign planning",
     "Software Engineering" =>
@@ -185,26 +215,35 @@ defmodule Aptitude.OpenAI do
 
   @difficulty_mix %{
     "easy" => %{
-      types: "Focus on TYPE 1, TYPE 2, TYPE 3, TYPE 5, TYPE 6, TYPE 7",
+      types: "Focus on TYPE 1, TYPE 2, TYPE 3, TYPE 5, TYPE 6, TYPE 7, TYPE 11",
       note:
         "Use simple numbers (no decimals). Passages should be short (2-3 sentences). Analogies should be obvious. Scoring: a prepared candidate should get 75%+."
     },
     "medium" => %{
-      types: "Use ALL types. Spread evenly.",
+      types: "Use ALL types (TYPE 1 through TYPE 11). Spread evenly.",
       note:
         "Calculations require 2 steps. Passages are 4-5 sentences. Include at least 2 situational judgement questions. Some distractors should look very plausible."
     },
     "hard" => %{
       types:
-        "Heavy on TYPE 2, TYPE 4, TYPE 5, TYPE 8, TYPE 10. Include at least 3 TYPE 10 situational questions.",
+        "Heavy on TYPE 2, TYPE 4, TYPE 5, TYPE 8, TYPE 10, TYPE 11. Include at least 3 TYPE 10 situational questions and at least 2 TYPE 11 abstract reasoning questions.",
       note:
         "Multi-step calculations. Longer passages (6-8 sentences). Statements in Type 5 should require careful reading — 'Cannot Tell' answers should be genuinely non-obvious. A strong expert candidate should score ~65%. All 4 options must be plausible — no obviously wrong answers."
     }
   }
 
+  @sector_type_overrides %{
+    "Software Engineering" => %{
+      types:
+        "Focus heavily on TYPE 8 (Statement & Conclusion / logical deduction), TYPE 9 (Coding/Pattern), TYPE 11 (Abstract/Spatial Reasoning). Include some TYPE 1 (Number Series). Do NOT generate KES salary word problems — instead use algorithm complexity, loop output, binary/hex conversions, or code tracing as the numerical context.",
+      note:
+        "Questions should test logical reasoning, code output prediction, algorithm analysis, and pattern recognition. E.g. 'What does this loop output?', 'Which sorting algorithm is O(n log n)?', 'What is the next value in this binary sequence?'. Keep it technical but reasoning-focused."
+    }
+  }
+
   def generate_questions(sector, difficulty, count) do
     knowledge_area = Map.get(@sector_knowledge, sector, sector)
-    diff = Map.get(@difficulty_mix, difficulty, @difficulty_mix["medium"])
+    diff = Map.get(@sector_type_overrides, sector) || Map.get(@difficulty_mix, difficulty, @difficulty_mix["medium"])
 
     prompt = """
     You are a senior psychometric test designer. You create pre-employment aptitude tests used by top Kenyan employers like Safaricom, KCB, Equity Bank, and Unilever Kenya. Your tests follow the same format as SHL, Kenexa, and Wonderlic assessments.
@@ -226,7 +265,7 @@ defmodule Aptitude.OpenAI do
     === RULES ===
     1. Every question must have EXACTLY ONE correct answer. Test this yourself before writing the options.
     2. All 4 options must be plausible — never include an obviously silly distractor.
-    3. For numerical questions: double-check your arithmetic. The correct answer must be mathematically exact.
+    3. For numerical questions: work out the answer step-by-step FIRST, verify it, THEN write the options. The correct answer must be mathematically exact. Never place a wrong value as the correct_answer.
     4. Use Kenyan context naturally: KES for currency, Kenyan company names (Safaricom, KCB, Equity, Twiga Foods, Jumia Kenya, Kenya Power, KPLC, Nation Media, etc.), Kenyan cities and geography, Kenyan laws and institutions.
     5. Do NOT repeat the same question style back-to-back. Vary the type with every question.
     6. Do NOT generate all knowledge/definition questions. This is an APTITUDE test — it tests REASONING, not memorisation.
@@ -238,7 +277,7 @@ defmodule Aptitude.OpenAI do
     {
       "questions": [
         {
-          "type": "Number Series | Word Problem | Ratio/Percentage | Time/Speed/Work | Verbal True/False | Word Analogy | Odd One Out | Statement & Conclusion | Coding Pattern | Situational Judgement",
+          "type": "Number Series | Word Problem | Ratio/Percentage | Time/Speed/Work | Verbal True/False | Word Analogy | Odd One Out | Statement & Conclusion | Coding Pattern | Situational Judgement | Abstract/Spatial Reasoning",
           "question": "Full question text. For verbal reasoning, include the full passage first, then the statement or question.",
           "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
           "correct_answer": "A",
