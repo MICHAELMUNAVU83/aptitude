@@ -12,7 +12,7 @@ defmodule Aptitude.OpenAI do
   defp request(prompt) do
     Req.post(@api_url,
       json: %{
-        model: "gpt-5",
+        model: "gpt-4o",
         messages: [%{role: "user", content: prompt}],
         response_format: %{type: "json_object"},
         temperature: 0.2
@@ -215,14 +215,16 @@ defmodule Aptitude.OpenAI do
 
   @difficulty_mix %{
     "easy" => %{
-      types: "Focus on TYPE 1, TYPE 2, TYPE 3, TYPE 5, TYPE 6, TYPE 7, TYPE 11",
+      types:
+        "Focus on TYPE 1, TYPE 2, TYPE 3, TYPE 5, TYPE 6, TYPE 7, TYPE 11. You MUST include at least 2 TYPE 11 (Abstract/Spatial Reasoning) questions — these are mandatory.",
       note:
-        "Use simple numbers (no decimals). Passages should be short (2-3 sentences). Analogies should be obvious. Scoring: a prepared candidate should get 75%+."
+        "Use simple numbers (no decimals). Passages should be short (2-3 sentences). Analogies should be obvious. Abstract questions should use simple shape sequences and paper folding. Scoring: a prepared candidate should get 75%+."
     },
     "medium" => %{
-      types: "Use ALL types (TYPE 1 through TYPE 11). Spread evenly.",
+      types:
+        "Use ALL types (TYPE 1 through TYPE 11). Spread evenly. You MUST include at least 2 TYPE 11 (Abstract/Spatial Reasoning) questions — these are mandatory.",
       note:
-        "Calculations require 2 steps. Passages are 4-5 sentences. Include at least 2 situational judgement questions. Some distractors should look very plausible."
+        "Calculations require 2 steps. Passages are 4-5 sentences. Include at least 2 situational judgement questions and at least 2 abstract/spatial reasoning questions. Some distractors should look very plausible."
     },
     "hard" => %{
       types:
@@ -243,7 +245,10 @@ defmodule Aptitude.OpenAI do
 
   def generate_questions(sector, difficulty, count) do
     knowledge_area = Map.get(@sector_knowledge, sector, sector)
-    diff = Map.get(@sector_type_overrides, sector) || Map.get(@difficulty_mix, difficulty, @difficulty_mix["medium"])
+
+    diff =
+      Map.get(@sector_type_overrides, sector) ||
+        Map.get(@difficulty_mix, difficulty, @difficulty_mix["medium"])
 
     prompt = """
     You are a senior psychometric test designer. You create pre-employment aptitude tests used by top Kenyan employers like Safaricom, KCB, Equity Bank, and Unilever Kenya. Your tests follow the same format as SHL, Kenexa, and Wonderlic assessments.
@@ -270,6 +275,7 @@ defmodule Aptitude.OpenAI do
     5. Do NOT repeat the same question style back-to-back. Vary the type with every question.
     6. Do NOT generate all knowledge/definition questions. This is an APTITUDE test — it tests REASONING, not memorisation.
     7. Each question must test a different concept. No duplicates.
+    8. MANDATORY: You MUST include at least 2 questions of TYPE 11 (Abstract/Spatial Reasoning). These test non-verbal reasoning with shapes, patterns, rotations, paper folding, and pattern matrices. If you omit TYPE 11 questions, the test is INVALID. Describe shapes in words — do not reference images.
 
     === OUTPUT FORMAT ===
     Return ONLY valid JSON. No markdown. No code fences. No explanation. Begin with { and end with }.
